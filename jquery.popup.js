@@ -15,7 +15,6 @@
 // TODO: create private functions to replace all anonymous functions
 // TODO: describe popup styles and stylesheet in the documentation
 // TODO: add list of supported browsers to documentation
-// TODO: add a resize event to resize the black matte
 // TODO: add an closeCallback function -- called at "end" of popup close event handler
 // TODO: add an option that will track popups as part of browser history using Ben Alman's hashchange plugin 
 
@@ -244,7 +243,14 @@
     //
     // --INITIALIZATIONS THAT CAN BE DONE IMMEDIATELY
     //
-    // none so far
+    $(window).bind("resize", function() {
+
+        var browserWindow = $(window);
+
+        if (popupmatte) {
+            popupmatte.css( { width:browserWindow.width(), height:browserWindow.height() } );
+        }
+    });
 
     
     //
