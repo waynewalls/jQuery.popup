@@ -1,0 +1,315 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+        <title>popup Plugin Demonstration &amp; Documentation</title>
+
+        <!-- CSS : implied media="all" from html5boilerplate [ http://html5boilerplate.com/ ] -->
+        <link rel="stylesheet" href="css/style.css">
+
+        <style type="text/css">
+
+            body { background-color: #f6f8f6; line-height:1.3em; }
+
+            /* required when used with the html5boilerplate css reset
+             * the background:transparent in that stylesheet interferes
+             * with the background-image style in the jQuery.popup
+             * stylesheet
+             */
+            body.ie6 { background:#f6f8f6 url(images/clear1.gif) fixed; margin-bottom:25px;}
+
+            body.ie6 { margin-bottom:25px;}
+            body.ie7 { margin-bottom:25px;}
+
+            .pageTitle { font-size:150%; color:#654; font-weight:bold; margin:25px 0; text-align:center; }
+
+            .contentContainer {
+                visibility:visible; background-color:#fff; padding:20px; margin:0 auto 25px auto; width:750px; border:1px solid #987; position:relative; overflow:hidden;
+                -moz-border-radius:8px; -webkit-border-radius:8px;
+            }
+
+            .contentContainer p { margin:2em 0 0 0; }
+
+            .pHeader { font-weight:bold; font-size:110%; color:#009; }
+
+            .buttonContainer button { margin:0.75em 0 0 25px; }
+            .ie6 button { padding:0 5px; }
+            .ie7 button { padding:0 5px; }
+
+            .optionsPrompt { font-weight:bold; font-size:110%; color:#009; margin:2em 0 0 0; }
+
+            .options { margin:1em 0 0 0;}
+            .options pre { padding:0; white-space:pre; }
+
+            .bold { font-weight:bold; color:#000; }
+
+            /* override the default style for the serverComm plugin UI prompt */
+            #sc_contactServerPrompt { font-size:110%; z-index:2; }
+
+            /* popup content styles */
+            .popupContent { padding:20px; overflow-y:scroll; overflow-x:hidden; }
+            .popupParagraph { color: #444; font-weight: normal; margin:0.5em 0 0 0; }
+            .popupContent li { margin:0.5em 0 0 0; }
+            .popupheader { color:#007700; font-size:130%; font-weight:bold; margin:1em 0 0 0; }
+            .popContentTitles { color: #000; font-size: 130%; font-weight:bold; text-align:center; }
+
+        </style>
+
+    </head>
+
+    <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+    <!--[if lt IE 7 ]> <body class="ie6"> <![endif]-->
+    <!--[if IE 7 ]>    <body class="ie7"> <![endif]-->
+    <!--[if IE 8 ]>    <body class="ie8"> <![endif]-->
+    <!--[if IE 9 ]>    <body class="ie9"> <![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!--> <body> <!--<![endif]-->
+
+        <h1 class="pageTitle">jQuery popup Plugin Demonstration &amp; Documentation</h1>
+
+        <div class="contentContainer">
+
+            <p>
+
+                Version: 0.9<br>
+                Date: 20 August 2010<br>
+                License: MIT License or GNU General Public License (GPL) Version 2<br>
+                Git repository: [ <a href="http://github.com/waynewalls/jquery.popup">http://github.com/waynewalls/jquery.popup</a> ]
+
+            </p>
+
+            <p>
+
+                <span class="pHeader">Background. </span>This plugin was developed to support a training application that displays
+                reference materials and questions in modal-like popup &quot;windows.&quot;  Because questions may appear when a reference
+                popup is open, the plugin allows more than one popup to be open at a time&mdash;but only one is visible.
+                When a popup is closed, any previously open popup is redisplayed.  HTML-formatted content for the popup is obtained
+                from an external file using the <a href="http://github.com/waynewalls/jquery.servercomm">jQuery.servercomm</a> plugin.
+                
+            </p>
+
+            <p>
+
+                <span class="pHeader">Limitations. </span>The first line of the external file containing popup content MUST contain
+                the string "Success|" as its initial content.  This string is removed with the remaining content passed to $.popup as html.  This
+                limitation will be removed in a future version.
+
+            </p>
+
+            <p>
+
+                <span class="pHeader">How to use this demonstration. </span>Click one of the buttons below.
+
+            </p>
+
+            <div class="buttonContainer">
+
+                <button name="single">Display a single popup</button><br>
+                <button name="two">Display two sequential popups</button> (The second appears 5-seconds after the first.)
+
+            </div>
+
+            <div class="optionsPrompt">jQuery.popup dependencies:</div>
+
+            <div class="options">
+
+                requires jQuery v1.4;<br>
+                requires jQuery.severcomm plugin [ <a href="http://github.com/waynewalls/jquery.servercomm">http://github.com/waynewalls/jquery.servercomm</a> ];<br>
+                there are no other dependencies.
+
+            </div>
+
+            <div class="optionsPrompt">jQuery.popup usage:</div>
+
+            <div class="options">
+
+                <pre>$.popup.show( config )</pre> where config is an optional object containing popup options.<br><br>
+
+                <span class="bold">Example</span> (see the first demo above):<br>
+                <pre><code>$.popup.show( {
+    url : "content1.html",
+    title : "Demonstration Title 1",
+    successCallback : function(color) {
+        $(this).find(".ww-popup-title").css("color", color);
+    },
+    successArgs : ["#009"]
+} );</code></pre>
+
+            </div>
+
+            <div class="optionsPrompt">jQuery.popup options (type) [ default value ]:</div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class="bold">url</span> (string) [ empty string ]</pre>
+                The URL for the file that contains the popup content
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class="bold">title</span> (string) [ empty string ]</pre>
+                A text string to be used for the popup title bar title text
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class="bold">width</span> (integer) [ 600 ]</pre>
+                Width in pixels of the popup container DIV element
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class=bold>successCallback</span> (function()) [ null ]</pre>
+                A function that will be called after the popup is created, inserted into the DOM, and just before
+                it is rendered.  The function context (this) is set to the DIV element serving as the
+                popup container.
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class="bold">successArgs</span> (array) [ null ]</pre>
+                An array of values that will be passed to the successCallback function using the apply() method.
+
+            </div>
+
+            <div class="optionsPrompt">jQuery.popup public methods:</div>
+
+            <div class="options">
+
+                <pre>$.popup.<span class="bold">configure</span>( config )</pre>
+                Sets popup options where config is an object containing new options that will act as default values
+                for subsequent requests.
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.<span class="bold">show</span>( config )</pre>
+                Displays a popup based on the values passed in the config parameter.
+
+            </div>
+
+            <div class="optionsPrompt">jQuery.popup known issues:</div>
+
+            <div class="options">
+
+                jQuery.popup uses a background image on the body to prevent jittering in Internet Explorer 6
+                when the page is scrolled and a popup is open (see [ <a href="http://www.webmasterworld.com/css/3592524.htm">http://www.webmasterworld.com/css/3592524.htm</a> ]).
+                Recent css reset stylesheets that set background:transparent on the body interfere
+                with this &quot;fix.&quot;  To work around this problem use conditional comments or other method of detecting IE6
+                and add, { background:#fff url(images/clear1.gif) fixed }, with a color of you choice, as a body style
+                after the reset stylesheet has loaded.
+
+            </div>
+
+        </div>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+            // load jQuery from Google's CDN
+        </script>
+
+        <script type="text/javascript" src="jquery/jquery.servercomm.min.js">
+            // load the jquery.servercomm plugin
+        </script>
+
+        <script type="text/javascript" src="jquery.popup.js">
+            // load the jquery.popup plugin
+        </script>
+
+
+        <script type="text/javascript">
+
+
+            // preload the images we'll need for this page
+            // [ http://engineeredweb.com/blog/09/12/preloading-images-jquery-and-javascript ]
+            ( function() {
+                
+                var toLoad = [
+                    // see [ http://www.ajaxload.info/ ] for public domain animated gifs
+                    "images/close.gif",
+                    "images/busy666.gif",
+                    "images/busy999.gif"],
+                    cache = [],
+                    cacheImage,
+                    len,
+                    i;
+
+                len = toLoad.length;
+                for (i = len; i--;) {
+                    cacheImage = document.createElement('img');
+                    cacheImage.src = toLoad[i];
+                    cache.push(cacheImage);
+                }
+
+            }() );
+
+
+            ( function($) {
+
+                var pageLoad = {
+
+                    eventHandler_buttons : function() {
+
+                        // open two sequential popups
+                        $("button:[name=two]").bind("click", function() {
+
+                            $.popup.show( {
+                                url : "content1.html",
+                                title : "Demonstration Title 1",
+                                width : 700,
+                                successCallback : function(color) {
+                                    $(this).find(".ww-popup-title").css("color", color);
+                                },
+                                successArgs : ["#009"]
+                            } );
+
+                            setTimeout(function() {
+                                $.popup.show( {
+                                    url : "content2.html",
+                                    title : "Demonstration Title 2",
+                                    width : 550,
+                                    successCallback : null,
+                                    successArg : null
+                                } );
+                            }, 5000);
+
+                        });
+
+                        // open a single popup
+                        $("button:[name=single]").bind("click", function() {
+
+                            $.popup.show( {
+                                url : "content1.html",
+                                title : "Demonstration Title 1",
+                                width : 700,
+                                successCallback : function(color) {
+                                    $(this).find(".ww-popup-title").css("color", color);
+                                },
+                                successArgs : ["#009"]
+                            } );
+                        });
+
+                    }
+
+                };
+
+                $(window).bind("load", function() {
+
+                    pageLoad.eventHandler_buttons();
+
+                });
+
+            }(jQuery) );
+
+        </script>
+
+    </body>
+
+</html>
