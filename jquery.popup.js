@@ -14,7 +14,6 @@
 
 // TODO: create private functions to replace all anonymous functions
 // TODO: describe popup styles and stylesheet in the documentation
-// TODO: add list of supported browsers to documentation
 // TODO: add an closeCallback function -- called at "end" of popup close event handler
 // TODO: add an option that will track popups as part of browser history using Ben Alman's hashchange plugin 
 
