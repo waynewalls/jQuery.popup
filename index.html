@@ -295,7 +295,9 @@
                                     successArg : null,
                                     // change the color of the previous popup's title from blue to white
                                     closeCallback : function(color) {
-                                        $(this).find(".ww-popup-title").css("color", color);
+                                        if ($(this).length >= 1) {
+                                            $(this).find(".ww-popup-title").css("color", color);
+                                        }
                                     },
                                     closeArgs : ["#fff"]
                                 } );

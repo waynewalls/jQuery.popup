@@ -15,6 +15,7 @@
 // TODO: create private functions to replace all anonymous functions
 // TODO: describe popup styles and stylesheet in the documentation
 // TODO: add an option that will track popups as part of browser history using Ben Alman's hashchange plugin
+// TODO: add keyboard handlers to close popup windows
 
 
 /*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
@@ -166,7 +167,7 @@
 
             // check to see if there is a closeCallback function
             if (options.closeCallback && $.isFunction(options.closeCallback)) {
-                options.closeCallback.apply(activepopup[0] || null, (options.closeArgs || [null]));
+                options.closeCallback.apply((activepopup) ? activepopup[0]:null, (options.closeArgs || [null]));
             }
 
         },
@@ -352,7 +353,7 @@
             $.serverComm.contactServer( {
 
                 url:$.popup.options.url,
-                dataObject: {},
+                method: "GET",
                 successCallback : function(response) {
 
                     // get the content portion of the serverComm response
