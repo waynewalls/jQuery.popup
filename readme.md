@@ -1,120 +1,100 @@
-# jQuery serverComm Plugin #
+# jQuery popup Plugin #
 
 Version: 0.9  
-Date: 28 June 2010  
+Date: 20 August 2010  
 License: MIT License or GNU General Public License (GPL) Version 2   
-Example at: [http://waynewalls.com/servercomm/](http://waynewalls.com/servercomm/)
+Example at: [http://waynewalls.com/popup/](http://waynewalls.com/popup/)
+
+Tested with: Internet Explorer 6, 7, and 8; Firefox 3-3.6; Chrome 5, 6; Safari 5
 
 ## BACKGROUND ##
 
-This plugin provides a user interface (UI) and simple API for
-$.ajax().  It was developed for a training applications whose primary user
-group was in West Africa. This region of the world--at the time--was served by
-a single Internet backbone traveling up the west side of the continent.
-Internet use involved long latency and frequent dropped connections. Because of
-this, we wanted a UI that would keep the user informed about connection status
-and also retry automatically in case of a dropped connection.
+This plugin was developed to support a training application that displays
+reference materials and questions in modal-like popup "windows." Because
+questions may appear when a reference popup is open, the plugin allows more than
+one popup to be open at a time—but only one is visible. When a popup is closed,
+any previously open popup is redisplayed. HTML-formatted content for the popup
+is obtained from an external file using the [http://waynewalls.com/servercomm/](jQuery.servercomm) plugin.
 
 ## LIMITATIONS ##
 
-At present, the serverComm plugin only supports the POST method
-of sending data to the server and the text data type for receiving responses
-from the server.  To keep the UI simple, it currently handles only one request
-at a time.
+The first line of the external file containing popup content MUST contain the
+string "Success|" as its initial content. This string is removed with the
+remaining content passed to $.popup as html. This limitation will be removed in
+a future version.
 
 
-## serverComm DEPENDENCIES ##
+## popup DEPENDENCIES ##
 
-Requires jQuery v1.4;  there are no other dependencies.
+Requires jQuery v1.4+;  
+requires jQuery.servercomm plugin [http://waynewalls.com/servercomm/](http://waynewalls.com/servercomm/);  
+there are no other dependencies.
 
 
-## serverComm USAGE ##
+## popup USAGE ##
 
-`$.serverComm.contactServer( config )`  
-where config is an optional object containing serverComm options.
+`$.popup.show( config )`  
+where config is an optional object containing popup options.
 
 Example:
 
-    $.serverComm.contactServer( {
-        url:serverComm.php,
-        dataObject:{ key1:value1, key2,value2 },
-        successCallback:onSuccess   
+    $.popup.show( { 
+    url : "content1.html", 
+    title : "Demonstration Title 1", 
+    successCallback : function(color) { 
+        $(this).find(".ww-popup-title").css("color", color); 
+    }, 
+    successArgs : ["#009"] 
     } );
     
 
-## serverComm OPTIONS (type) [ default value ] ##
+## popup OPTIONS (type) [ default value ] ##
 
-`$.serverComm.options.url (string) [ empty string ]`  
-The URL to assign to the $.ajax() URL property
+`$.popup.options.url (string) [ empty string ]` 
+The URL for the file that contains the popup content
 
-`$.serverComm.options.dataObject (object) [ null ]`  
-An object to be assigned to the $.ajax() data property
+`$.popup.options.title (object) [ empty string ]` 
+A text string to be used for the popup title bar title text 
 
-`$.serverComm.options.autoRetrys (integer) [ 4 ]`  
-The number of times to automatically retry the request
+`$.popup.options.width (integer) [ 600 ]` 
+Width in pixels of the popup container DIV element
 
-`$.serverComm.options.autoTimeout (integer) [ 7000 ]`  
-The number of milliseconds to wait for a response from the server
+`$.popup.options.successCallback (function()) [ null ]`  
+A function that will be called after the popup is created, inserted into the
+DOM, and just before it is rendered. The function context (this) is set to the
+DIV element serving as the popup container.
 
-`$.serverComm.options.giveupCallback (function(error)) [ null ]`  
-A function that will be called after the last automatic retry.  It is passed
-the error that it returned by the server-side script or $.ajax()
+`$.popup.options.successArgs (array) [ null ]`   
+An array of values that will be passed as arguments to the successCallback
+function using the apply() method.
 
-`$.serverComm.options.errorCallback (function(error, request)) [ null ]`  
-A function that will be called before initiating each automatic retry.    It is
-passed the error that it returned by the server-side script or $.ajax() and the
-number of request attempts.
+`$.popup.options.closeCallback (function()) [ null ]`  
+A function that will be called after the popup is closed and removed from the
+DOM. The function context (this) is set to the DIV element serving as the popup
+container for any previously displayed popup. If there was no previous popup
+then the function content is set to null.
 
-`$.serverComm.options.successCallback (function(response)) [ null ]`  
-A function that will be called after each successful connection attempt. It is
-passed the text string that $.ajax() passes to its success callback.
-
-`$.serverComm.options.contactPromptText (string) [ "Contacting server" ]`  
-A string shown in UI prompt during the first connection attempt.  The string
-can include HTML that can be contained within inline element.
-
-`$.serverComm.options.giveupPromptText (string) [ "The problem hasn't gone away
-&mdash; try again later" ]`  
-A string shown in UI prompt after the last automatic retry has failed.  The
-string can include HTML that can be contained within inline element.
-
-`$.serverComm.options.successPromptText (string) [ "Contacting server &mdash;
-SUCCESS!" ]`  
-A string shown in UI prompt after a successful automatic retry.  The string can
-include HTML that can be contained within inline element.
-
-`$.serverComm.options.contactImagePath (string) [ "images/busy999.gif" ]`  
-The path to an image that will be displayed in the UI prompt during the initial
-connection attempt.
-
-`$.serverComm.options.problemImagePath (string) [ "images/busy666.gif" ]`  
-The path to an image that will be displayed in the UI prompt during automatic
-retries.
-
-`$.serverComm.options.closeBoxImagePath (string) [ "images/close.gif" ]`  
-The path to an image that will be used as a close box in the UI prompt that is
-shown after all automatic retries have failed.
-
-`$.serverComm.options.responseSeparator (string) [ "|" ]`  
-The character used by the server-side script to separate the connection status
-from data being returned to the client.
+`$.popup.options.closeArgs (array) [ null ]`  
+An array of values that will be passed as argruments to the closeCallback
+function using the apply() method.
 
 
-## serverComm PUBLIC METHODS ##
+## popup PUBLIC METHODS ##
 
-`$.serverComm.configure( config )`  
-Sets serverComm options where config is an object containing new options that
+`$.popup.configure( config )`  
+Sets popup options where config is an object containing new options that
 will act as default values for subsequent requests.
 
-`$.serverComm.activeConnection()`  
-Returns a boolean; true if there is an active serverComm request otherwise
-false.
+`$.popup.show( config )`  
+Displays a popup based on the values passed in the config parameter.
 
-`$.serverComm.inprocessWarning()`  
-Displays an absolutely positioned prompt in the center of the user's window
-that says, "Please Wait!".  Used in conjunction with activeConnection() to
-prevent simultaneous serverComm requests.
 
-`$.serverComm.contactServer( config )`  
-Initiates a serverComm request where config is an optional object containing
-serverComm options as key/value pairs.
+## popup KNOWN ISSUES
+
+jQuery.popup uses a background image on the body to prevent jittering in
+Internet Explorer 6 when the page is scrolled and a popup is open (see
+[http://www.webmasterworld.com/css/3592524.htm](http://www.webmasterworld.com/css/3592524.htm)).
+Recent css reset stylesheets that set background:transparent on the body
+interfere with this "fix." To work around this problem use conditional comments
+or other method of detecting IE6 and add, { background:#fff url(images/clear1.gif) fixed },
+with a color of you choice, as a body style after the reset stylesheet has loaded.

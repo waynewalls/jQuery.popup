@@ -14,8 +14,7 @@
 
 // TODO: create private functions to replace all anonymous functions
 // TODO: describe popup styles and stylesheet in the documentation
-// TODO: add an closeCallback function -- called at "end" of popup close event handler
-// TODO: add an option that will track popups as part of browser history using Ben Alman's hashchange plugin 
+// TODO: add an option that will track popups as part of browser history using Ben Alman's hashchange plugin
 
 
 /*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
@@ -131,7 +130,8 @@
         eventHandler_popupClose = function() {
 
             var popDims,
-                horizontalPosition;
+                horizontalPosition,
+                options = $.popup.options;
 
             activepopup.remove();
             activepopup = null;
@@ -163,6 +163,12 @@
 
                 });
             }
+
+            // check to see if there is a closeCallback function
+            if (options.closeCallback && $.isFunction(options.closeCallback)) {
+                options.closeCallback.apply(activepopup[0] || null, (options.closeArgs || [null]));
+            }
+
         },
 
         /**
@@ -295,7 +301,13 @@
             successCallback : null,
 
             // arguments to be passed to the successCallback function
-            successArgs : null
+            successArgs : null,
+
+            // callback to be executed after the popup is closed
+            closeCallback : null,
+
+            // arguments to be passed to the closeCallback function
+            closeArgs : null
 
         },
 

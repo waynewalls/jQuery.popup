@@ -75,6 +75,7 @@
                 Date: 20 August 2010<br>
                 License: MIT License or GNU General Public License (GPL) Version 2<br>
                 Git repository: [ <a href="http://github.com/waynewalls/jquery.popup">http://github.com/waynewalls/jquery.popup</a> ]<br><br>
+                
                 Tested with: Internet Explorer 6, 7, and 8; Firefox 3-3.6; Chrome 5, 6; Safari 5
 
             </p>
@@ -173,7 +174,23 @@
             <div class="options">
 
                 <pre>$.popup.options.<span class="bold">successArgs</span> (array) [ null ]</pre>
-                An array of values that will be passed to the successCallback function using the apply() method.
+                An array of values that will be passed as arguments to the successCallback function using the apply() method.
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class=bold>closeCallback</span> (function()) [ null ]</pre>
+                A function that will be called after the popup is closed and removed from the DOM.  The function context (this)
+                is set to the DIV element serving as the popup container for any previously displayed popup.  If there was
+                no previous popup then the function content is set to null.
+
+            </div>
+
+            <div class="options">
+
+                <pre>$.popup.options.<span class="bold">closeArgs</span> (array) [ null ]</pre>
+                An array of values that will be passed as argruments to the closeCallback function using the apply() method.
 
             </div>
 
@@ -262,6 +279,7 @@
                                 url : "content1.html",
                                 title : "Demonstration Title 1",
                                 width : 700,
+                                // change the popup title color from white to blue
                                 successCallback : function(color) {
                                     $(this).find(".ww-popup-title").css("color", color);
                                 },
@@ -274,7 +292,12 @@
                                     title : "Demonstration Title 2",
                                     width : 550,
                                     successCallback : null,
-                                    successArg : null
+                                    successArg : null,
+                                    // change the color of the previous popup's title from blue to white
+                                    closeCallback : function(color) {
+                                        $(this).find(".ww-popup-title").css("color", color);
+                                    },
+                                    closeArgs : ["#fff"]
                                 } );
                             }, 5000);
 
@@ -287,6 +310,7 @@
                                 url : "content1.html",
                                 title : "Demonstration Title 1",
                                 width : 700,
+                                // change the popup title color from white to blue
                                 successCallback : function(color) {
                                     $(this).find(".ww-popup-title").css("color", color);
                                 },
