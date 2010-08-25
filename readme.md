@@ -12,7 +12,7 @@ Tested with: Internet Explorer 6, 7, and 8; Firefox 3-3.6; Chrome 5, 6; Safari 5
 This plugin was developed to support a training application that displays
 reference materials and questions in modal-like popup "windows." Because
 questions may appear when a reference popup is open, the plugin allows more than
-one popup to be open at a time—but only one is visible. When a popup is closed,
+one popup to be open at a time--but only one is visible. When a popup is closed,
 any previously open popup is redisplayed. HTML-formatted content for the popup
 is obtained from an external file using the [jQuery.servercomm](http://waynewalls.com/servercomm/) plugin.
 
