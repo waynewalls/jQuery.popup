@@ -14,7 +14,7 @@ reference materials and questions in modal-like popup "windows." Because
 questions may appear when a reference popup is open, the plugin allows more than
 one popup to be open at a time—but only one is visible. When a popup is closed,
 any previously open popup is redisplayed. HTML-formatted content for the popup
-is obtained from an external file using the [http://waynewalls.com/servercomm/](jQuery.servercomm) plugin.
+is obtained from an external file using the [jQuery.servercomm](http://waynewalls.com/servercomm/) plugin.
 
 ## LIMITATIONS ##
 
@@ -39,24 +39,24 @@ where config is an optional object containing popup options.
 Example:
 
     $.popup.show( { 
-    url : "content1.html", 
-    title : "Demonstration Title 1", 
-    successCallback : function(color) { 
-        $(this).find(".ww-popup-title").css("color", color); 
-    }, 
-    successArgs : ["#009"] 
+        url : "content1.html", 
+        title : "Demonstration Title 1", 
+        successCallback : function(color) { 
+            $(this).find(".ww-popup-title").css("color", color); 
+        }, 
+        successArgs : ["#009"] 
     } );
     
 
 ## popup OPTIONS (type) [ default value ] ##
 
-`$.popup.options.url (string) [ empty string ]` 
+`$.popup.options.url (string) [ empty string ]`  
 The URL for the file that contains the popup content
 
-`$.popup.options.title (object) [ empty string ]` 
+`$.popup.options.title (object) [ empty string ]`  
 A text string to be used for the popup title bar title text 
 
-`$.popup.options.width (integer) [ 600 ]` 
+`$.popup.options.width (integer) [ 600 ]`  
 Width in pixels of the popup container DIV element
 
 `$.popup.options.successCallback (function()) [ null ]`  
