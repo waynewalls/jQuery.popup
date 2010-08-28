@@ -1,7 +1,7 @@
 # jQuery popup Plugin #
 
-Version: 0.9  
-Date: 20 August 2010  
+Version: 0.91  
+Date: 28 August 2010  
 License: MIT License or GNU General Public License (GPL) Version 2   
 Example at: [http://waynewalls.com/popup/](http://waynewalls.com/popup/)
 

@@ -2,9 +2,9 @@
  *  jQuery.popup plugin -- modal popup, content loaded with AJAX request
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 20 August 2010
+ *  Date: 28 August 2010
  *  @author Wayne Walls
- *  @version 0.9
+ *  @version 0.91
  *
  * DEPENDENCY: jQuery.servercomm plugin
  * [ http://github.com/waynewalls/jquery.servercomm ]
@@ -67,7 +67,7 @@
         styleText = [
             // stop "jittering" during scrolling in IE6 [ http://www.webmasterworld.com/css/3592524.htm ]
             (ie === 6) ? "body { background-image: url(images/clear1.gif) fixed; }" : "",
-            ".ww-popup-matte" + "{ display:none; background-color:black;",
+            ".ww-popup-matte" + "{ display:none; background-color:black; width:100%; height:100%;",
             // position:fixed -- include IE6 too
             (ie === 6) ? "position: absolute; left: expression((document.documentElement || document.body).scrollLeft); top: expression((document.documentElement || document.body).scrollTop);" : "position:fixed; left:0; top:0px;",
             "}",
@@ -144,15 +144,19 @@
 
                 activepopup.appendTo(document.body);
 
+                horizontalPosition = ($(window).width() - activepopup.width()) / 2;
+
                 if (ie === 6) {
 
                     // recalculate the dynamic expressions that simulate position fixed for IE6
                     // they appear to be lost when jQuery's detach() is used to detach the popup from the DOM
                     popDims = getPopUpDimensions();
-                    horizontalPosition = ($(window).width() - activepopup.width()) / 2;
 
                     activepopup[0].style.setExpression('top', "(document.documentElement || document.body).scrollTop + " + popDims.top);
                     activepopup[0].style.setExpression('left', "(document.documentElement || document.body).scrollLeft + " + horizontalPosition);
+                }
+                else {
+                    activepopup.css( { left:horizontalPosition } );
                 }
             }
             else {
@@ -249,12 +253,26 @@
     //
     // --INITIALIZATIONS THAT CAN BE DONE IMMEDIATELY
     //
-    $(window).bind("resize", function() {
+    $(window).bind("resize.ww-popup-event", function() {
 
-        var browserWindow = $(window);
+        var browserWindow = $(window),
+            horizontalPosition;
 
         if (popupmatte) {
-            popupmatte.css( { width:browserWindow.width(), height:browserWindow.height() } );
+
+            horizontalPosition = (browserWindow.width() - activepopup.width()) / 2;
+
+            if (ie === 6) {
+
+                activepopup[0].style.setExpression('left', "(document.documentElement || document.body).scrollLeft + " + horizontalPosition);
+                popupmatte.css( { width:browserWindow.width(), height:browserWindow.height() } );
+
+            }
+            else {
+
+                activepopup.css( { left:horizontalPosition } );
+                
+            }
         }
     });
 
@@ -364,8 +382,12 @@
 
                         popupmatte = $("<div />", {
                             "class" : "ww-popup-matte",
-                            css : { opacity:0.70, width:browserWindow.width(), height:browserWindow.height() }
+                            css : { opacity:0.70 }
                         }).appendTo(document.body);
+
+                        if (ie === 6) {
+                            popupmatte.css( { height:browserWindow.height(), width:browserWindow.width() } );
+                        }
 
                         // OK we're ready, slide down the matte and show the popup
                         popupmatte.slideDown("normal", createPopup);
