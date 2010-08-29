@@ -1,7 +1,7 @@
 # jQuery popup Plugin #
 
-Version: 0.91  
-Date: 28 August 2010  
+Version: 0.92  
+Date: 29 August 2010  
 License: MIT License or GNU General Public License (GPL) Version 2   
 Example at: [http://waynewalls.com/popup/](http://waynewalls.com/popup/)
 
@@ -84,6 +84,9 @@ function using the apply() method.
 `$.popup.configure( config )`  
 Sets popup options where config is an object containing new options that
 will act as default values for subsequent requests.
+
+`$.popup.popupOpen( config )`  
+Returns true if a popup is open otherwise false.
 
 `$.popup.show( config )`  
 Displays a popup based on the values passed in the config parameter.

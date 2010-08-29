@@ -2,9 +2,9 @@
  *  jQuery.popup plugin -- modal popup, content loaded with AJAX request
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 28 August 2010
+ *  Date: 29 August 2010
  *  @author Wayne Walls
- *  @version 0.91
+ *  @version 0.92
  *
  * DEPENDENCY: jQuery.servercomm plugin
  * [ http://github.com/waynewalls/jquery.servercomm ]
@@ -140,7 +140,7 @@
             // if the user had a previously open popup
             if (popupStorage.length !== 0) {
 
-                activepopup = popupStorage.shift();
+                activepopup = popupStorage.pop();
 
                 activepopup.appendTo(document.body);
 
@@ -174,6 +174,11 @@
                 options.closeCallback.apply((activepopup) ? activepopup[0]:null, (options.closeArgs || [null]));
             }
 
+            // if the user had a previous popup open restore the options associated with the popup
+            if (popupStorage.length !== 0) {
+                $.popup.options = $.extend($.popup.options, popupStorage.pop());
+            }
+
         },
 
         /**
@@ -188,11 +193,6 @@
                 options = $.popup.options,
                 popDims,
                 horizontalPosition;
-
-            // see if there is an existing popup -- if yes then detach and save it
-            if (activepopup) {
-                popupStorage.push(activepopup.detach());
-            }
 
             // create the popup  and popup titlebar containers
             activepopup = $("<div />", { "class":"ww-popup-container"})
@@ -210,8 +210,11 @@
                 .appendTo(document.body);
 
             // set the width of the pop-up container
-            if (options.width !== 600) {
+            if (typeof options.width === "number") {
                 activepopup.css("width", options.width);
+            }
+            else {
+                activepopup.css("width", 600);
             }
 
             // check to see if the popup is too wide to completely fit inside the browser browser window
@@ -347,6 +350,15 @@
 
         },
 
+        /**
+         * PUBLIC METHOD
+         * popupOpen() returns true if a popup is open otherwise false
+         *
+         */
+        popupOpen : function() {
+            return ( activepopup !== null );
+        },
+
 
         /**
          * PUBLIC METHOD
@@ -361,7 +373,14 @@
          */
         show : function(config) {
             
-            var browserWindow = $(window);
+            var browserWindow = $(window),
+                temp;
+
+            // see if there is an existing popup -- if yes then detach and save it along with its options
+            if (activepopup) {
+                popupStorage.push($.extend(temp, this.options));
+                popupStorage.push(activepopup.detach());
+            }
 
             // get the user submitted configuration options for this call
             config = config || {};
