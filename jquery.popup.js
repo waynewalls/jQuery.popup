@@ -2,9 +2,9 @@
  *  jQuery.popup plugin -- modal popup, content loaded with AJAX request
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
  *  License: MIT License or GNU General Public License (GPL) Version 2
- *  Date: 29 August 2010
+ *  Date: 01 September 2010
  *  @author Wayne Walls
- *  @version 0.92
+ *  @version 0.93
  *
  * DEPENDENCY: jQuery.servercomm plugin
  * [ http://github.com/waynewalls/jquery.servercomm ]
@@ -16,6 +16,7 @@
 // TODO: describe popup styles and stylesheet in the documentation
 // TODO: add an option that will track popups as part of browser history using Ben Alman's hashchange plugin
 // TODO: add keyboard handlers to close popup windows
+// TODO: add a debug option to write error messages to window.console
 
 
 /*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
@@ -308,8 +309,22 @@
     $.popup = {
 
         // PUBLIC PROPERTY -- popup default option settings
+        optionDefaults : {
+
+            // see below for comments
+            url : "",
+            title : "",
+            width : 600,
+            successCallback : null,
+            successArgs : null,
+            closeCallback : null,
+            closeArgs : null
+
+        },
+
+        // PUBLIC PROPERTY -- popup option settings
         options : {
-            
+
             // url containing the popup content
             url : "",
 
@@ -346,7 +361,7 @@
 
             // get the user submitted configuration options
             config = config || {};
-            this.options = $.extend(this.options, config);
+            this.optionDefaults = $.extend(this.optionDefaults, config);
 
         },
 
@@ -374,7 +389,7 @@
         show : function(config) {
             
             var browserWindow = $(window),
-                temp;
+                temp = {};
 
             // see if there is an existing popup -- if yes then detach and save it along with its options
             if (activepopup) {
@@ -384,7 +399,7 @@
 
             // get the user submitted configuration options for this call
             config = config || {};
-            this.options = $.extend(this.options, config);
+            this.options = $.extend({}, this.optionDefaults, config);
 
             // get the content for this popup
             $.serverComm.contactServer( {

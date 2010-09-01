@@ -71,8 +71,8 @@
 
             <p>
 
-                Version: 0.92<br>
-                Date: 29 August 2010<br>
+                Version: 0.93<br>
+                Date: 01 September 2010<br>
                 License: MIT License or GNU General Public License (GPL) Version 2<br>
                 Git repository: [ <a href="http://github.com/waynewalls/jquery.popup">http://github.com/waynewalls/jquery.popup</a> ]<br><br>
                 
@@ -130,7 +130,7 @@
                 <span class="bold">Example</span> (see the first demo above):<br>
                 <pre><code>$.popup.show( {
     url : "content1.html",
-    title : "Demonstration Title 1",
+    title : "First Sequential Popup",
     successCallback : function(color) {
         $(this).find(".ww-popup-title").css("color", color);
     },
@@ -140,6 +140,12 @@
             </div>
 
             <div class="optionsPrompt">jQuery.popup options (type) [ default value ]:</div>
+
+            <div class="options">
+
+                <pre>// popup options default values are available in $.popup.optionDefaults</pre>
+
+            </div>
 
             <div class="options">
 
@@ -199,14 +205,14 @@
             <div class="options">
 
                 <pre>$.popup.<span class="bold">configure</span>( config )</pre>
-                Sets popup options where config is an object containing new options that will act as default values
+                Sets popup options where config is an object containing new values that will act as defaults
                 for subsequent requests.
 
             </div>
 
             <div class="options">
 
-                <pre>$.popup.<span class="bold">popupOpen</span>( config )</pre>
+                <pre>$.popup.<span class="bold">popupOpen</span>()</pre>
                 Returns true if a popup is open otherwise false.
 
             </div>
@@ -279,15 +285,16 @@
 
                     eventHandler_buttons : function() {
 
-                        // open two sequential popups
+                        // open two sequential popups to demonstrate storage and restore
                         $("button:[data-popup=two]").bind("click", function() {
 
                             $.popup.show( {
                                 url : "content1.html",
-                                title : "Demonstration Title 1",
+                                title : "First Sequential Popup",
                                 width : 700,
-                                // change the popup title color from white to blue
                                 successCallback : function(color) {
+                                    // change the popup title color from white to blue
+                                    // function context is the open popup container DIV element
                                     $(this).find(".ww-popup-title").css("color", color);
                                 },
                                 successArgs : ["#009"]
@@ -296,12 +303,11 @@
                             setTimeout(function() {
                                 $.popup.show( {
                                     url : "content2.html",
-                                    title : "Demonstration Title 2",
+                                    title : "Second Sequential Popup",
                                     width : 550,
-                                    successCallback : null,
-                                    successArg : null,
-                                    // change the color of the previous popup's title from blue to white
                                     closeCallback : function(color) {
+                                        // change the color of the previous popup's title from blue back to white
+                                        // function context is the previously open popup's container DIV element
                                         if ($(this).length >= 1) {
                                             $(this).find(".ww-popup-title").css("color", color);
                                         }
@@ -315,15 +321,9 @@
                         // open a single popup
                         $("button:[data-popup=single]").bind("click", function() {
 
+                            // display a default popup with no title text or callbacks
                             $.popup.show( {
-                                url : "content1.html",
-                                title : "Demonstration Title 1",
-                                width : 700,
-                                // change the popup title color from white to blue
-                                successCallback : function(color) {
-                                    $(this).find(".ww-popup-title").css("color", color);
-                                },
-                                successArgs : ["#009"]
+                                url : "content1.html"
                             } );
                         });
 
