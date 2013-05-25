@@ -19,7 +19,7 @@
 // TODO: add a debug option to write error messages to window.console
 
 
-/*jslint browser: true, devel: true, onevar: true, undef: true, nomen: true, eqeqeq: true, bitwise: true, regexp: true, newcap: true, immed: true */
+/*jslint browser: true, devel: true, undef: true, nomen: true, bitwise: true, regexp: true, newcap: true */
 /*global window, jQuery */
 
 
@@ -44,18 +44,18 @@
         //
 
         // after James Padolsey [ http://james.padolsey.com/javascript/detect-ie-in-js-using-conditional-comments/ ]
-        // return IE version as an integer or undefined if not IE
+        // return IE version (up to 9) as an integer or undefined if not IE
         ie = ( function(){
 
             var undef,
                 v = 3,
                 div = document.createElement('div'),
-                all = div.getElementsByTagName('i');
+                all = div.getElementsByTagName('p');
 
             do {
                 // if this is IE then the i element will be added as a child of div
                 // increment v each time through the loop
-                div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->';
+                div.innerHTML = '<!--[if gt IE ' + (v += 1) + ']><p></p><![endif]-->';
             }
             // if this is IE then all[0] will be "truthy" if v is <= to the current version
             while (all[0]);
@@ -172,7 +172,7 @@
 
             // check to see if there is a closeCallback function
             if (options.closeCallback && $.isFunction(options.closeCallback)) {
-                options.closeCallback.apply((activepopup) ? activepopup[0]:null, (options.closeArgs || [null]));
+                options.closeCallback.apply(activepopup ? activepopup[0]:null, (options.closeArgs || [null]));
             }
 
             // if the user had a previous popup open restore the options associated with the popup

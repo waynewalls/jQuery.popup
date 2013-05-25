@@ -28,7 +28,7 @@
 
             .contentContainer {
                 visibility:visible; background-color:#fff; padding:20px; margin:0 auto 25px auto; width:750px; border:1px solid #987; position:relative; overflow:hidden;
-                -moz-border-radius:8px; -webkit-border-radius:8px;
+                border-radius:5px;
             }
 
             .contentContainer p { margin:2em 0 0 0; }
@@ -127,7 +127,7 @@
 
                 <pre>$.popup.show( config )</pre> where config is an optional object containing popup options.<br><br>
 
-                <span class="bold">Example</span> (see the first demo above):<br>
+                <span class="bold">Example</span> (see the first window in the sequential popup demo above):<br>
                 <pre><code>$.popup.show( {
     url : "content1.html",
     title : "First Sequential Popup",
@@ -196,7 +196,7 @@
             <div class="options">
 
                 <pre>$.popup.options.<span class="bold">closeArgs</span> (array) [ null ]</pre>
-                An array of values that will be passed as argruments to the closeCallback function using the apply() method.
+                An array of values that will be passed as arguments to the closeCallback function using the apply() method.
 
             </div>
 
@@ -323,7 +323,8 @@
 
                             // display a default popup with no title text or callbacks
                             $.popup.show( {
-                                url : "content1.html"
+                                url : "content1.html",
+                                title : "Popup Window"
                             } );
                         });
 

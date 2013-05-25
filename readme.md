@@ -77,7 +77,7 @@ container for any previously displayed popup. If there was no previous popup
 then the function content is set to null.
 
 `$.popup.options.closeArgs (array) [ null ]`  
-An array of values that will be passed as argruments to the closeCallback
+An array of values that will be passed as arguments to the closeCallback
 function using the apply() method.
 
 
