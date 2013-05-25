@@ -1,10 +1,10 @@
 /**
  *  jQuery.popup plugin -- modal popup, content loaded with AJAX request
  *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
- *  License: MIT License or GNU General Public License (GPL) Version 2
  *  Date: 01 September 2010
  *  @author Wayne Walls
  *  @version 0.93
+ *  @license MIT License or GNU General Public License (GPL) Version 2
  *
  * DEPENDENCY: jQuery.servercomm plugin
  * [ http://github.com/waynewalls/jquery.servercomm ]
