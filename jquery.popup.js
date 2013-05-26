@@ -60,6 +60,7 @@
             // if this is IE then all[0] will be "truthy" if v is <= to the current version
             while (all[0]);
 
+            //noinspection JSUnusedAssignment
             return v > 4 ? v : undef;
             
         }() ),
@@ -153,7 +154,9 @@
                     // they appear to be lost when jQuery's detach() is used to detach the popup from the DOM
                     popDims = getPopUpDimensions();
 
+                    //noinspection JSUnresolvedFunction
                     activepopup[0].style.setExpression('top', "(document.documentElement || document.body).scrollTop + " + popDims.top);
+                    //noinspection JSUnresolvedFunction
                     activepopup[0].style.setExpression('left', "(document.documentElement || document.body).scrollLeft + " + horizontalPosition);
                 }
                 else {
@@ -230,7 +233,9 @@
 
             // if this is IE6
             if (ie === 6) {
+                //noinspection JSUnresolvedFunction
                 activepopup[0].style.setExpression('top', "(document.documentElement || document.body).scrollTop + " + popDims.top);
+                //noinspection JSUnresolvedFunction
                 activepopup[0].style.setExpression('left', "(document.documentElement || document.body).scrollLeft + " + horizontalPosition);
             }
             else {
@@ -268,6 +273,7 @@
 
             if (ie === 6) {
 
+                //noinspection JSUnresolvedFunction
                 activepopup[0].style.setExpression('left', "(document.documentElement || document.body).scrollLeft + " + horizontalPosition);
                 popupmatte.css( { width:browserWindow.width(), height:browserWindow.height() } );
 
@@ -306,6 +312,7 @@
     //
     // --PLUGIN NAMESPACE ** PUBLIC PROPERTIES AND METHODS
     //
+    //noinspection FunctionWithInconsistentReturnsJS
     $.popup = {
 
         // PUBLIC PROPERTY -- popup default option settings
@@ -409,7 +416,8 @@
                 successCallback : function(response) {
 
                     // get the content portion of the serverComm response
-                    popupContent = $(response.split("|")[1]);
+                    // $.parseHTML() added to comply with changes in jQuery 1.9
+                    popupContent = $($.parseHTML(response.split("|")[1]));
 
                     // If there is no existing popup add the translucent black matte
                     if (popupmatte === null) {

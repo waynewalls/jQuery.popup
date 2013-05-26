@@ -106,8 +106,8 @@
 
             <div class="buttonContainer">
 
-                <button data-popup="single">Display a single popup</button><br>
-                <button data-popup="two">Display two sequential popups</button> (The second appears 5-seconds after the first.)
+                <button id="single">Display a single popup</button><br>
+                <button id="sequential">Display two sequential popups</button> (The second appears 5-seconds after the first.)
 
             </div>
 
@@ -239,7 +239,7 @@
 
         </div>
 
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.0.min.js">
             // load jQuery from Google's CDN
         </script>
 
@@ -286,7 +286,7 @@
                     eventHandler_buttons : function() {
 
                         // open two sequential popups to demonstrate storage and restore
-                        $("button:[data-popup=two]").bind("click", function() {
+                        $("#sequential").bind("click", function() {
 
                             $.popup.show( {
                                 url : "content1.html",
@@ -319,7 +319,7 @@
                         });
 
                         // open a single popup
-                        $("button:[data-popup=single]").bind("click", function() {
+                        $("#single").bind("click", function() {
 
                             // display a default popup with no title text or callbacks
                             $.popup.show( {
