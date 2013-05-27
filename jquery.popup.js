@@ -1,9 +1,9 @@
 /**
  *  jQuery.popup plugin -- modal popup, content loaded with AJAX request
- *  Copyright (c) 2010 Wayne Walls - wfwalls(at)gmail(dot)com
- *  Date: 01 September 2010
+ *  Copyright (c) 2013 Wayne Walls - wfwalls(at)gmail(dot)com
+ *  Date: 26 May 2013
  *  @author Wayne Walls
- *  @version 0.93
+ *  @version 0.95
  *  @license MIT License or GNU General Public License (GPL) Version 2
  *
  * DEPENDENCY: jQuery.servercomm plugin
@@ -417,7 +417,13 @@
 
                     // get the content portion of the serverComm response
                     // $.parseHTML() added to comply with changes in jQuery 1.9
-                    popupContent = $($.parseHTML(response.split("|")[1]));
+                    // popupContent = $($.parseHTML(response.split("|")[1]));
+                    // Testing revealed that the string returned by $.parseHTML() did not work in Firefox and IE
+                    // It caused an error in popupContent.css("padding-top") which is called toward the end of createPopup()
+                    // It did work in Safari and Chrome
+                    // Consequently remove the non-HTML content from the response string BEFORE creating popupContent
+                    response = response.split("|")[1];
+                    popupContent = $(response);
 
                     // If there is no existing popup add the translucent black matte
                     if (popupmatte === null) {

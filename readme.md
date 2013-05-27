@@ -1,11 +1,11 @@
 # jQuery popup Plugin #
 
-Version: 0.93  
-Date: 01 September 2010  
+Version: 0.95  
+Date: 26 May 2013  
 License: MIT License or GNU General Public License (GPL) Version 2   
 Example at: [http://waynewalls.com/popup/](http://waynewalls.com/popup/)
 
-Tested with: Internet Explorer 6, 7, and 8; Firefox 3-3.6; Chrome 5, 6; Safari 5
+Tested with: Internet Explorer 6 - 10, Firefox, Chrome, and Safari. 
 
 ## BACKGROUND ##
 
@@ -26,7 +26,7 @@ a future version.
 
 ## popup DEPENDENCIES ##
 
-Requires jQuery v1.4+;  
+Requires jQuery (tested with 1.4.2 and 1.10.0);  
 requires jQuery.servercomm plugin [http://waynewalls.com/servercomm/](http://waynewalls.com/servercomm/);  
 there are no other dependencies.
 
